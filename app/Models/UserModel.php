@@ -1,0 +1,27 @@
+<?php namespace App\Models;
+
+use CodeIgniter\Model;
+
+//hary//
+
+//hary//
+class UserModel extends Model
+{
+    protected $table      = 'user';
+    protected $primaryKey = 'id_user';
+
+    protected $returnType = 'array';
+
+    protected $allowedFields = ['username','password','level'];
+
+    
+    public function login($username,$password)
+    {
+        return $this->where(['Username'=>$username,'Password'=>$password])
+                    ->get()->getRowArray();
+    }
+}
+
+//starrt hary//
+
+//end hary
