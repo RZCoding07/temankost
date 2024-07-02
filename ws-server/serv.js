@@ -1,5 +1,5 @@
 const WebSocket = require("ws");
-
+const fetch = require('node-fetch'); // Install node-fetch with npm install node-fetch before running this script
 let HOST = "localhost";
 const WS_PORT = 8888;
 let chatUrl = `http://localhost/Web/laragon/temankost/`;
@@ -12,7 +12,7 @@ let connectedClients = new Map();
 let channels = new Map();
 let broadcasts = new Map();
 
-function saveChat(sender, receiver, message, status, timestamp) {
+function saveChat(sender, receiver, message, status, timestamp, id_kost) {
   let data = JSON.stringify({
     sender: sender,
     receiver: receiver,
@@ -169,17 +169,17 @@ wsServer.on("connection", (ws, req) => {
           ws.send("Fail: Broadcast is active, cannot create a private channel");
           return;
         }
-        if (channels.has(sender) || channels.has(receiver)) {
-          console.log(
-            `Channel already established between ${sender} and ${receiver}`
-          );
-          try {
-            connectedClients.get(sender).send(`connect_not_ok`);
-          } catch (error) {
-            console.log(error);
-          }
-          return;
-        }
+        // if (channels.has(sender) || channels.has(receiver)) {
+        //   console.log(
+        //     `Channel already established between ${sender} and ${receiver}`
+        //   );
+        //   try {
+        //     connectedClients.get(sender).send(`connect_not_ok`);
+        //   } catch (error) {
+        //     console.log(error);
+        //   }
+        //   return;
+        // }
         if (!channels.has(sender) && !channels.has(receiver)) {
           if (!connectedClients.has(receiver)) {
             try {
@@ -238,15 +238,19 @@ wsServer.on("connection", (ws, req) => {
         // Mengirim data dalam bentuk array buffer hanya kepada receiver di channel yang sama
         connectedClients.get(channel.receiver).send(data);
       } else if (typeof data === "string") {
-        // Mengirim data teks hanya kepada receiver di channel yang sama
-        connectedClients.get(channel.receiver).send(data);
-        let receiver = channel.receiver;
-        let sender = cAddr;
-        let timestamp = new Date()
-          .toISOString()
-          .replace(/T/, " ")
-          .replace(/\..+/, "");
-        saveChat(sender, receiver, data, 1, timestamp);
+        try {
+          let json = JSON.parse(data);
+          json = json[0];
+          let message = json.message;
+          connectedClients.get(channel.receiver).send(message);
+          let receiver = json.receiver;
+          let sender = json.sender;
+          let timestamp = json.timestamp;
+          let id_kost = json.id_kost;
+          saveChat(sender, receiver, message, 1, timestamp, id_kost);
+        } catch (error) {
+          console.log(error);
+        }
       }
     } else {
       // Untuk broadcast, hanya broadcaster yang bisa mengirim pesan

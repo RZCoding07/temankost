@@ -268,8 +268,9 @@ try {
                   <a href="mailto:<?= $pemilik['email'] ?>" class="btn btn-secondary" target="blank"><i class="bi bi-envelope fs-4 me-2"></i>Email</a>
                   &nbsp;&nbsp;
                   <button class=" btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#data-modal" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-cart-plus"></i><span>Booking</span></button>
-                  <button onclick="openChat(<?= $data['id'] ?>)" class=" btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-messenger"></i><span>Chat</span></button>
+                  <button onclick="openChat('c<?= $data['id'] ?>')" class=" btn btn-warning" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-messenger"></i><span>Chat</span></button>
                   &nbsp;&nbsp;
+                  <button id="ofc" aria-controls="offcanvasRight" class="d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"></button>
                 </div>
               </div>
             </div>
@@ -367,6 +368,12 @@ try {
   var receiver = "x";
 
   function openChat(id) {
+    if (sender == '') {
+      window.location = '<?= base_url('Auth') ?>'
+      return
+    }
+    $('#ofc').trigger('click')
+    receiver = id
     wso = new WebSocket('ws://localhost:8888');
     $('#chat_kost_id').val(id)
     wso.onopen = function(e) {
@@ -375,16 +382,20 @@ try {
       wso.send(sender + '|connect|' + receiver)
     };
     wso.onmessage = function(e) {
-      let date = new moment().format('HH.mm')
-      if (e.data == "connect_ok") return
-      $('.imessage').append(`
+      let data = JSON.parse(e.data)[0]
+      let message = data.message
+      let date = data.timestamp
+      let receiver = data.receiver
+      if (receiver == sender) {
+        $('.imessage').append(`
       <div class="mb-2  animate__animated animate__fadeInLeft row pe-2">
-      <p class="from-them">${e.data}</p>
+      <p class="from-them">${message}</p>
       <span class="text-secondary">${date}</span>
       </div>
       `)
-      $('#notif').trigger('play')
-      $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
+        $('#notif').trigger('play')
+        $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
+      }
     }
   };
 
@@ -394,14 +405,14 @@ try {
       return
     }
     let timestamp = new moment().format('YYYY-MM-DD HH:mm:ss')
-    msg = JSON.stringify({
+    let data = JSON.stringify([{
       'message': msg,
       'timestamp': timestamp,
       'sender': sender,
       'receiver': receiver,
       'kost_id': $('#chat_kost_id').val(),
-    })
-    wso.send(msg);
+    }])
+    wso.send(data);
     let date = new moment().format('HH.mm')
     $('.imessage').append(`
      <div class="mb-2  animate__animated animate__fadeInRight d-flex justify-content-end flex-column">
