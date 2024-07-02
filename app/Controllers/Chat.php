@@ -14,11 +14,11 @@ class Chat extends BaseController
         $Pemilik = new PenggunaModel();
         $db = db_connect();
         $userID = session()->get('id');
-        $chatlist =  $db->table('chat')->where('receiver', $userID)->distinct('sender')->get()->getResultArray();
+        $users = $db->table('chat')->select('id_kost,sender, receiver,nama,email')->distinct()->where('receiver', $userID)->join('pengguna', 'chat.sender = pengguna.id')->get()->getResultArray();
         $data = [
             'title' => 'Chat Room',
             'data' => $this->request->getGet(),
-            'chatlist' => $chatlist,
+            'users' => $users,
         ];
         return view('chat', $data);
     }
@@ -26,10 +26,17 @@ class Chat extends BaseController
     function insertChat()
     {
         $db = db_connect();
-        $chatData = json_decode(array_values(array_flip($this->request->getRawInput()))[0]);
-        $db->table('chat')->insert((array) $chatData);
-        $chatString = json_encode($chatData);
+        $data = $this->request->getGet();
+        $chatString = $db->table('chat')->insert($data);
         echo json_encode($chatString);
         exit();
+    }
+
+    function getChat()
+    {
+        $req = $this->request->getGet();
+        $db = db_connect();
+        $data = $db->table('chat')->where('id_kost', $req['id_kost'])->orderBy('timestamp', 'asc')->get()->getResultArray();
+        return view('chatbox', ['data' => $data, 'req' => $req]);
     }
 }

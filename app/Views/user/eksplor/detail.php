@@ -31,163 +31,6 @@ try {
 
 ?>
 
-<style>
-  .cropimg {
-    width: 100%;
-    /* width of container */
-    height: 350px;
-    /* height of container */
-    object-fit: cover;
-  }
-
-  .imessage {
-    background-color: #fff;
-    border: 1px solid #e5e5ea;
-    border-radius: 0.25rem;
-    display: flex;
-    flex-direction: column;
-    font-family: "SanFrancisco";
-    font-size: 1.25rem;
-    margin: 0 auto 1rem;
-    max-width: 600px;
-    padding: 0.5rem 1.5rem;
-  }
-
-  .imessage p {
-    border-radius: 1.15rem;
-    line-height: 1.25;
-    max-width: 75%;
-    padding: 0.5rem .875rem;
-    position: relative;
-    word-wrap: break-word;
-  }
-
-  .imessage p::before,
-  .imessage p::after {
-    bottom: -0.1rem;
-    content: "";
-    height: 1rem;
-    position: absolute;
-  }
-
-  p.from-me {
-    align-self: flex-end;
-    background-color: #248bf5;
-    color: #fff;
-  }
-
-  p.from-me::before {
-    border-bottom-left-radius: 0.8rem 0.7rem;
-    border-right: 1rem solid #248bf5;
-    right: -0.35rem;
-    transform: translate(0, -0.1rem);
-  }
-
-  p.from-me::after {
-    background-color: #fff;
-    border-bottom-left-radius: 0.5rem;
-    right: -40px;
-    transform: translate(-30px, -2px);
-    width: 10px;
-  }
-
-  p[class^="from-"] {
-    margin: 0.5rem 0;
-    width: fit-content;
-  }
-
-  p.from-me~p.from-me {
-    margin: 0.25rem 0 0;
-  }
-
-  p.from-me~p.from-me:not(:last-child) {
-    margin: 0.25rem 0 0;
-  }
-
-  p.from-me~p.from-me:last-child {
-    margin-bottom: 0.5rem;
-  }
-
-  p.from-them {
-    align-items: flex-start;
-    background-color: #e5e5ea;
-    color: #000;
-  }
-
-  p.from-them:before {
-    border-bottom-right-radius: 0.8rem 0.7rem;
-    border-left: 1rem solid #e5e5ea;
-    left: -0.35rem;
-    transform: translate(0, -0.1rem);
-  }
-
-  p.from-them::after {
-    background-color: #fff;
-    border-bottom-right-radius: 0.5rem;
-    left: 20px;
-    transform: translate(-30px, -2px);
-    width: 10px;
-  }
-
-  p[class^="from-"].emoji {
-    background: none;
-    font-size: 2.5rem;
-  }
-
-  p[class^="from-"].emoji::before {
-    content: none;
-  }
-
-  .no-tail::before {
-    display: none;
-  }
-
-  .margin-b_none {
-    margin-bottom: 0 !important;
-  }
-
-  .margin-b_one {
-    margin-bottom: 1rem !important;
-  }
-
-  .margin-t_one {
-    margin-top: 1rem !important;
-  }
-
-
-  .comment {
-    color: #222;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
-    max-width: 100%;
-    padding: 0;
-  }
-
-  @media screen and (max-width: 800px) {
-    body {
-      margin: 0 0.5rem;
-    }
-
-    .container {
-      padding: 0.5rem;
-    }
-
-    .imessage {
-      font-size: 1.05rem;
-      margin: 0 auto 1rem;
-      max-width: 600px;
-      padding: 0.25rem 0.875rem;
-    }
-
-    .imessage p {
-      margin: 0.5rem 0;
-    }
-  }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" integrity="sha512-hUhvpC5f8cgc04OZb55j0KNGh4eh7dLxd/dPSJ5VyzqDWxsayYbojWyl5Tkcgrmb/RVKCRJI1jNlRbVP4WWC4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <div class="container-fluid" id="kt_content_container">
   <!--begin::Row-->
   <div class="row">
@@ -268,7 +111,7 @@ try {
                   <a href="mailto:<?= $pemilik['email'] ?>" class="btn btn-secondary" target="blank"><i class="bi bi-envelope fs-4 me-2"></i>Email</a>
                   &nbsp;&nbsp;
                   <button class=" btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#data-modal" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-cart-plus"></i><span>Booking</span></button>
-                  <button onclick="openChat('c<?= $data['id'] ?>')" class=" btn btn-warning" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-messenger"></i><span>Chat</span></button>
+                  <button onclick="openChat('<?= $data['id'] ?>','6')" class=" btn btn-warning" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-messenger"></i><span>Chat</span></button>
                   &nbsp;&nbsp;
                   <button id="ofc" aria-controls="offcanvasRight" class="d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"></button>
                 </div>
@@ -367,19 +210,18 @@ try {
   var sender = "<?= session()->get('id') ?>"
   var receiver = "x";
 
-  function openChat(id) {
+  function openChat(id_kost, id_owner) {
     if (sender == '') {
       window.location = '<?= base_url('Auth') ?>'
       return
     }
     $('#ofc').trigger('click')
-    receiver = id
+    receiver = id_owner
     wso = new WebSocket('ws://localhost:8888');
-    $('#chat_kost_id').val(id)
+    $('#chat_kost_id').val(id_kost)
     wso.onopen = function(e) {
       console.log("Connection established!");
-      wso.send('x-addr:' + sender)
-      wso.send(sender + '|connect|' + receiver)
+      wso.send('[{"command":"handshake","address":"' + sender + '"}]')
     };
     wso.onmessage = function(e) {
       let data = JSON.parse(e.data)[0]
@@ -410,7 +252,7 @@ try {
       'timestamp': timestamp,
       'sender': sender,
       'receiver': receiver,
-      'kost_id': $('#chat_kost_id').val(),
+      'id_kost': $('#chat_kost_id').val(),
     }])
     wso.send(data);
     let date = new moment().format('HH.mm')
@@ -423,6 +265,7 @@ try {
     el.parent().find('input').val('');
     $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
   }
+
 
   document.getElementById('pay-button').onclick = function() {
     // SnapToken acquired from previous step
