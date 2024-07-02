@@ -292,8 +292,9 @@ try {
     </div>
     <div class="align-self-end w-100 mb-3">
       <div class="input-group mb-3 px-2">
-        <input type="text" class="form-control" placeholder="Ketik pesan..." aria-label="Ketik pesan..." aria-describedby="button-addon2">
-        <button class="btn btn-primary" type="button" onclick="sendMessage($(this))">Kirim <i class="bi bi-paper-plane"></i></button>
+        <input id="chat_message" type="text" class="form-control" placeholder="Ketik pesan..." aria-label="Ketik pesan..." aria-describedby="button-addon2">
+        <input type="hidden" name="chat_kost_id" id="chat_kost_id">
+        <button id="chat_send" class="btn btn-primary" type="button" onclick="sendMessage($(this))">Kirim <i class="bi bi-paper-plane"></i></button>
       </div>
     </div>
   </div>
@@ -362,13 +363,16 @@ try {
 <script src="https://app.midtrans.com/snap/snap.js" data-client-key="Mid-client-VrbWjF_6z2-1y2Lm"></script>
 <script>
   var wso = null
+  var sender = "<?= session()->get('id') ?>"
+  var receiver = "x";
 
   function openChat(id) {
     wso = new WebSocket('ws://localhost:8888');
+    $('#chat_kost_id').val(id)
     wso.onopen = function(e) {
       console.log("Connection established!");
-      wso.send('x-addr:x1')
-      wso.send('x1|connect|x')
+      wso.send('x-addr:' + sender)
+      wso.send(sender + '|connect|' + receiver)
     };
     wso.onmessage = function(e) {
       let date = new moment().format('HH.mm')
@@ -381,7 +385,6 @@ try {
       `)
       $('#notif').trigger('play')
       $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
-
     }
   };
 
@@ -390,6 +393,14 @@ try {
     if (msg == '') {
       return
     }
+    let timestamp = new moment().format('YYYY-MM-DD HH:mm:ss')
+    msg = JSON.stringify({
+      'message': msg,
+      'timestamp': timestamp,
+      'sender': sender,
+      'receiver': receiver,
+      'kost_id': $('#chat_kost_id').val(),
+    })
     wso.send(msg);
     let date = new moment().format('HH.mm')
     $('.imessage').append(`

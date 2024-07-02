@@ -2,7 +2,7 @@ const WebSocket = require("ws");
 
 let HOST = "localhost";
 const WS_PORT = 8888;
-let chatUrl = `http://${HOST}/chat`;
+let chatUrl = `http://localhost/Web/laragon/temankost/`;
 
 const wsServer = new WebSocket.Server({ host: HOST, port: WS_PORT }, () =>
   console.log(`WS server is listening at ws://${HOST}:${WS_PORT}`)
@@ -19,10 +19,9 @@ function saveChat(sender, receiver, message, status, timestamp) {
     message: message,
     status: status,
     timestamp: timestamp,
+    id_kost: 1,
   });
-  console.log(data);
-  return
-  fetch(chatUrl, {
+  fetch(chatUrl + "chat/insertchat", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -30,10 +29,11 @@ function saveChat(sender, receiver, message, status, timestamp) {
     },
     body: data,
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
+    // .then((response) =>
+    //   response.text().then((body) => {
+    //     console.log("Success:");
+    //   })
+    // )
     .catch((error) => {
       console.error("Error:", error);
     });
