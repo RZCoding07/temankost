@@ -1,3 +1,6 @@
+<?php
+var_dump($chatlist);
+?>
 <div class="container">
   <div class="row">
     <div class="col-12 mt-5 pt-3 pb-3 bg-white from-wrapper">
