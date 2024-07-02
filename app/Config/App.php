@@ -21,7 +21,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://localhost/temankost/';
+	public $baseURL = 'http://localhost/Web/laragon/temankost//';
 
 	/*
 	|--------------------------------------------------------------------------

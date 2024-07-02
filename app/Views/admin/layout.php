@@ -2,96 +2,97 @@
 
 <html lang="en">
 
-	<!--begin::Head-->
-	<head>
-		<base href="">
-		<meta charset="utf-8" />
-		<title><?=$title; ?></title>
-		<meta name="description" content="Website Portal Stunting NTT" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<!--begin::Head-->
 
-		<!--begin::Fonts-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+<head>
+	<base href="">
+	<meta charset="utf-8" />
+	<title><?= $title; ?></title>
+	<meta name="description" content="Website Portal Stunting NTT" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-		<!--end::Fonts-->
+	<!--begin::Fonts-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 
-		<!--begin::Page Vendors Styles(used by this page)-->
-		<link href="<?=base_url()?>/public/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+	<!--end::Fonts-->
 
-		<!--end::Page Vendors Styles-->
-		<link href="<?=base_url()?>/public/assets/plugins/custom/uppy/uppy.bundle.css?v=7.2.9" rel="stylesheet" type="text/css" />
+	<!--begin::Page Vendors Styles(used by this page)-->
+	<link href="<?= base_url() ?>/public/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 
-		<!--begin::Global Theme Styles(used by all pages)-->
-		<link href="<?=base_url()?>/public/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="<?=base_url()?>/public/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="<?=base_url()?>/public/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+	<!--end::Page Vendors Styles-->
+	<link href="<?= base_url() ?>/public/assets/plugins/custom/uppy/uppy.bundle.css?v=7.2.9" rel="stylesheet" type="text/css" />
 
-		<!--end::Global Theme Styles-->
+	<!--begin::Global Theme Styles(used by all pages)-->
+	<link href="<?= base_url() ?>/public/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+	<link href="<?= base_url() ?>/public/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+	<link href="<?= base_url() ?>/public/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
-		<!--begin::Layout Themes(used by all pages)-->
-		<link href="<?=base_url()?>/public/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
-		<link href="<?=base_url()?>/public/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
-		<link href="<?=base_url()?>/public/assets/css/themes/layout/brand/light.css" rel="stylesheet" type="text/css" />
-		<link href="<?=base_url()?>/public/assets/css/themes/layout/aside/light.css" rel="stylesheet" type="text/css" />
+	<!--end::Global Theme Styles-->
 
-		<!--end::Layout Themes-->
-		<link rel="icon" href="<?=base_url()?>/public/logo/temankost.png" />
-		<style>
+	<!--begin::Layout Themes(used by all pages)-->
+	<link href="<?= base_url() ?>/public/assets/css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
+	<link href="<?= base_url() ?>/public/assets/css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
+	<link href="<?= base_url() ?>/public/assets/css/themes/layout/brand/light.css" rel="stylesheet" type="text/css" />
+	<link href="<?= base_url() ?>/public/assets/css/themes/layout/aside/light.css" rel="stylesheet" type="text/css" />
+
+	<!--end::Layout Themes-->
+	<link rel="icon" href="<?= base_url() ?>/public/logo/temankost.png" />
+	<style>
+		*::-webkit-scrollbar {
+			width: 0.5em;
+		}
+
+		*::-webkit-scrollbar-track {
+			background-color: transparent;
 
 
-*::-webkit-scrollbar {
-    width: 0.5em;
-}
- 
-*::-webkit-scrollbar-track {
-  background-color:transparent;
-  
-  
-}
- 
-*::-webkit-scrollbar-thumb {
-  background-color: lightgrey;
-  border-radius:100em;
+		}
 
-  
-}
-*::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(117, 117, 117,0.5);
-}
-*::-webkit-scrollbar-button{
-  height: 2px;
-  background-color: rgba(117, 117, 117, 0);
-}
+		*::-webkit-scrollbar-thumb {
+			background-color: lightgrey;
+			border-radius: 100em;
 
-</style>
-	</head>
 
-	<!--end::Head-->
+		}
 
-	<!--begin::Body-->
-	<body id="kt_body" class="page-loading-enabled page-loading header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+		*::-webkit-scrollbar-thumb:hover {
+			background-color: rgba(117, 117, 117, 0.5);
+		}
 
-		<!--[html-partial:include:{"file":"partials/_page-loader.html"}]/-->
-		<?=view('admin/partials/_page-loader'); ?>
+		*::-webkit-scrollbar-button {
+			height: 2px;
+			background-color: rgba(117, 117, 117, 0);
+		}
+	</style>
+</head>
 
-		<?=view('admin/partials/_header-mobile'); ?>
-		<div class="d-flex flex-column flex-root">
+<!--end::Head-->
 
-			<!--begin::Page-->
-			<div class="d-flex flex-row flex-column-fluid page">
+<!--begin::Body-->
 
-				<?=view('admin/partials/_aside'); ?>
-				<!--begin::Wrapper-->
-				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+<body id="kt_body" class="page-loading-enabled page-loading header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+	<!--[html-partial:include:{"file":"partials/_page-loader.html"}]/-->
+	<?= view('admin/partials/_page-loader'); ?>
 
-					<?=view('admin/partials/_header'); ?>
+	<?= view('admin/partials/_header-mobile'); ?>
+	<div class="d-flex flex-column flex-root">
 
-					<!--begin::Content-->
-					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
 
-						<?=$this->renderSection('content'); ?>
+			<?= view('admin/partials/_aside'); ?>
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
 
-						<!-- end div tag on file script -->
+				<?= view('admin/partials/_header'); ?>
 
-	</body>
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+					<?= $this->renderSection('content'); ?>
+
+					<!-- end div tag on file script -->
+
+</body>
+
 </html>
