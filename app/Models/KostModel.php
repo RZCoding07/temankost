@@ -48,7 +48,7 @@ class KostModel extends Model
         ->distinct('foto.foto')
         ->get()
         ->getResultArray();
-        return [$data[0]];
+        return array_values(array_unique(array_column($data, null, 'id'), SORT_REGULAR));
 }
   public function getSearch($q)
   {
