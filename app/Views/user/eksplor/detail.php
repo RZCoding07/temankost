@@ -111,7 +111,7 @@ try {
                   <a href="mailto:<?= $pemilik['email'] ?>" class="btn btn-secondary" target="blank"><i class="bi bi-envelope fs-4 me-2"></i>Email</a>
                   &nbsp;&nbsp;
                   <button class=" btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#data-modal" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-cart-plus"></i><span>Booking</span></button>
-                  <button onclick="openChat('<?= $data['id'] ?>', '<?= $pemilik['id'] ?>','<?=$pemilik['nama']?>')" class=" btn btn-warning"><i class="bi bi-messenger"></i><span>Chat</span></button>
+                  <button onclick="openChat('<?= $data['id'] ?>', '<?= $pemilik['id'] ?>','<?= $pemilik['nama'] ?>','<?= $data['nama'] ?>')" class=" btn btn-warning"><i class="bi bi-messenger"></i><span>Chat</span></button>
                   &nbsp;&nbsp;
                   <button id="ofc" aria-controls="offcanvasRight" class="d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"></button>
                 </div>
@@ -129,7 +129,10 @@ try {
   <!--end::Row-->
   <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasRight" aria-labelledby="nmpemilik" style="width: 35%;">
     <div class="offcanvas-header">
-      <h3 class="offcanvas-title" id="nmpemilik">Ibu Kos</h3>
+      <div class="d-flex flex-column">
+        <h3 class="offcanvas-title" id="nmpemilik"></h3>
+        <span class="offcanvas-title" id="nmkost"></span>
+      </div>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body mx-2 imessage mb-2">
@@ -211,8 +214,9 @@ try {
   var receiver = "x";
   var ids_kost = ''
 
-  async function openChat(id_kost, id_owner,nama) {
+  async function openChat(id_kost, id_owner, nama, nama_kost) {
     $('#nmpemilik').text(nama)
+    $('#nmkost').text(nama_kost)
     ids_kost = id_kost
     if (sender == '') {
       window.location = '<?= base_url('Auth') ?>'
@@ -229,6 +233,7 @@ try {
       dataType: "html",
     }).done(function(data) {
       $('.imessage').html(data)
+      $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
     }).fail((err) => {
       console.log(err);
     })

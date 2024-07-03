@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 const HOST = "localhost";
 const WS_PORT = 8888;
-const chatUrl = `http://localhost/Web/laragon/temankost/`;
+const chatUrl = `http://localhost/temankost/`;
 
 const clients = new Map();
 let wsServer = new WebSocket.Server({ host: HOST, port: WS_PORT });

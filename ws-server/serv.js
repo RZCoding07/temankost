@@ -2,7 +2,7 @@ const WebSocket = require("ws");
 const fetch = require('node-fetch'); // Install node-fetch with npm install node-fetch before running this script
 let HOST = "localhost";
 const WS_PORT = 8888;
-let chatUrl = `http://localhost/Web/laragon/temankost/`;
+let chatUrl = `http://localhost/temankost/`;
 
 const wsServer = new WebSocket.Server({ host: HOST, port: WS_PORT }, () =>
   console.log(`WS server is listening at ws://${HOST}:${WS_PORT}`)

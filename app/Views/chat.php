@@ -813,8 +813,8 @@ message-area
                                 <span class="active"></span>
                               </div>
                               <div class="flex-grow-1 ms-3 user">
-                                <h3><?= $user['nama'] ?></h3>
-                                <p><?= $user['email'] ?></p>
+                                <h3 style="text-transform: none;"><?= $user['nama'] ?></h3>
+                                <p><?= $user['nama_kost'] ?></p>
                               </div>
                             </a>
                           <?php endforeach; ?>
@@ -890,6 +890,7 @@ message-area
         },
       }).done((res) => {
         $('.msg-body #chatcontent').html(res)
+        $('.modal-body').scrollTop($('.modal-body ul')[0].scrollHeight);
       })
       .fail((err) => {
         console.log(err)
@@ -916,7 +917,7 @@ message-area
         let sender = data.sender
         let id_kost = data.id_kost
         let uid = sender + "_" + id_kost
-        if ($('#chatcontent[data-id="' + uid + '"]').length < 0) {
+        if ($('#chatcontent[data-id="' + uid + '"]').length > 0) {
           $('#chatcontent[data-id="' + uid + '"]').append(
             `
                 <li class="sender animate__animated animate__lightSpeedInLeft">
