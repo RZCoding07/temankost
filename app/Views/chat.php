@@ -807,9 +807,9 @@ message-area
                       <div class="tab-pane fade show active" id="Open" role="tabpanel" aria-labelledby="Open-tab">
                         <div class="chat-list">
                           <?php foreach ($users as $key => $user) : ?>
-                            <a data-id="<?= $key ?>" data-kost="<?= $user['id_kost'] ?>" data-sender="<?= $user['receiver'] ?>" data-receiver="<?= $user['sender'] ?>" onclick="switchChat($(this))" role="button" class="align-items-center border d-flex mb-1 p-1 rounded">
+                            <a data-id="<?= $key ?>" data-kost="<?= $user['id_kost'] ?>" data-sender="<?= $user['receiver'] ?>" data-receiver="<?= $user['sender'] ?>" onclick="switchChat($(this))" role="button" class="align-items-center border d-flex mb-1 p-1 rounded chats">
                               <div class="flex-shrink-0">
-                                <img class="img-fluid" style="border-radius: 50%;width: 50px;height: 50px" src="<?= base_url('public/user/assets/media/avatars/150-25.jpg') ?>" alt="user img">
+                                <img class="img-fluid" style="border-radius: 50%;width: 50px;height: 50px" src="<?= base_url('public/user/assets/media/avatars/default.png') ?>" alt="user img">
                                 <span class="active"></span>
                               </div>
                               <div class="flex-grow-1 ms-3 user">
@@ -826,15 +826,21 @@ message-area
               </div>
             </div>
           </div>
+          <audio id="notif" class="d-none" src="<?= base_url() ?>/public/assets/media/audio/notif.mp3"></audio>
+
           <div class="chatbox">
             <div class="modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="msg-head">
                   <div class="row">
                     <div class="col-8">
-                      <div class="d-flex align-items-center">
+                      <div class="d-flex align-items-center userd">
                         <div class="flex-shrink-0">
                           <img class="img-fluid" style="border-radius: 50%;width: 50px;height: 50px" src="<?= base_url('public/user/assets/media/avatars/150-25.jpg') ?>" alt="user img">
+                        </div>
+                        <div class="flex-grow-1 ms-3 user">
+                          <h3></h3>
+                          <p></p>
                         </div>
                       </div>
                     </div>
@@ -842,7 +848,7 @@ message-area
                 </div>
                 <div class="modal-body">
                   <div class="msg-body">
-                    <ul>
+                    <ul id="chatcontent">
                     </ul>
                   </div>
                 </div>
@@ -863,11 +869,16 @@ message-area
 <script>
   var id_kost = null
   var receiver = 9
+
   function switchChat(elem) {
     id_kost = elem.attr('data-kost')
     receiver = elem.attr('data-receiver')
-    let userDetail = elem.find('.user').clone()
-    $('.msg-head .user').replaceWith(userDetail)
+    let uid = receiver + "_" + id_kost
+    console.log(uid);
+    $('#chatcontent').attr('data-id', uid)
+
+    let userDetail = elem.html()
+    $('.msg-head .userd').html(userDetail)
     $.ajax({
         type: "GET",
         url: "<?= base_url('Chat/getChat') ?>",
@@ -878,7 +889,7 @@ message-area
           'receiver': elem.attr('data-receiver'),
         },
       }).done((res) => {
-        $('.msg-body').html(res)
+        $('.msg-body #chatcontent').html(res)
       })
       .fail((err) => {
         console.log(err)
@@ -899,20 +910,27 @@ message-area
       console.log(e.data);
       let data = JSON.parse(e.data)[0]
       try {
-        let message = data.message
+        let message = data.message || ''
         let date = data.timestamp
         let receiver = data.receiver
         let sender = data.sender
-        $('.msg-body ul').append(
-          `
+        let id_kost = data.id_kost
+        let uid = sender + "_" + id_kost
+        if ($('#chatcontent[data-id="' + uid + '"]').length < 0) {
+          $('#chatcontent[data-id="' + uid + '"]').append(
+            `
                 <li class="sender animate__animated animate__lightSpeedInLeft">
                         <p>${message}</p>
-                        <span class="time">${timestamp}</span>
+                        <span class="time">${date}</span>
         </li>
         `
-        )
+          )
+          $('.modal-body').scrollTop($('.modal-body ul')[0].scrollHeight);
+          console.log(message);
+          $('#notif').trigger('play')
+        }
       } catch (error) {
-
+        console.log(error);
       }
     }
   };
@@ -931,7 +949,7 @@ message-area
       'id_kost': id_kost,
     }])
     wso.send(data);
-    let date = new moment().format('HH.mm')
+    let date = new moment().format('DD/MM/YYYY HH.mm')
     $('.modal-body .msg-body ul').append(`
     <li class="receiver animate__animated animate__lightSpeedInRight">
                         <p>${msg}</p>
@@ -1027,6 +1045,7 @@ message-area
 
   }
   window.addEventListener('load', function() {
+    $('.chats:first').trigger('click')
     $('#kt_footer').remove()
     console.log(1);
   });

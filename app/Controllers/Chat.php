@@ -36,7 +36,37 @@ class Chat extends BaseController
     {
         $req = $this->request->getGet();
         $db = db_connect();
-        $data = $db->table('chat')->where('id_kost', $req['id_kost'])->orderBy('timestamp', 'asc')->get()->getResultArray();
+        // var_dump($req);
+        // die();
+        $data = $db->table('chat')
+            ->where('id_kost', $req['id_kost'])
+            ->where('sender', $req['sender'])
+            ->where('receiver', $req['receiver'])
+            ->orWhere('id_kost', $req['id_kost'])
+            ->where('sender', $req['receiver'])
+            ->where('receiver', $req['sender'])
+            ->orderBy('timestamp', 'asc')
+            ->get()
+            ->getResultArray();
         return view('chatbox', ['data' => $data, 'req' => $req]);
+    }
+
+    function getchatuser()
+    {
+        $req = $this->request->getGet();
+        $db = db_connect();
+        // var_dump($req);
+        // die();
+        $data = $db->table('chat')
+            ->where('id_kost', $req['id_kost'])
+            ->where('sender', $req['sender'])
+            ->where('receiver', $req['receiver'])
+            ->orWhere('id_kost', $req['id_kost'])
+            ->where('sender', $req['receiver'])
+            ->where('receiver', $req['sender'])
+            ->orderBy('timestamp', 'asc')
+            ->get()
+            ->getResultArray();
+        return view('chatboxuser', ['data' => $data, 'req' => $req]);
     }
 }

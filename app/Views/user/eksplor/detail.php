@@ -111,7 +111,7 @@ try {
                   <a href="mailto:<?= $pemilik['email'] ?>" class="btn btn-secondary" target="blank"><i class="bi bi-envelope fs-4 me-2"></i>Email</a>
                   &nbsp;&nbsp;
                   <button class=" btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#data-modal" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-cart-plus"></i><span>Booking</span></button>
-                  <button onclick="openChat('<?= $data['id'] ?>','6')" class=" btn btn-warning" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-messenger"></i><span>Chat</span></button>
+                  <button onclick="openChat('<?= $data['id'] ?>', '<?= $pemilik['id'] ?>','<?=$pemilik['nama']?>')" class=" btn btn-warning"><i class="bi bi-messenger"></i><span>Chat</span></button>
                   &nbsp;&nbsp;
                   <button id="ofc" aria-controls="offcanvasRight" class="d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"></button>
                 </div>
@@ -127,9 +127,9 @@ try {
     <!--end::Col-->
   </div>
   <!--end::Row-->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasScrollingLabel" style="width: 35%;">
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasRight" aria-labelledby="nmpemilik" style="width: 35%;">
     <div class="offcanvas-header">
-      <h3 class="offcanvas-title" id="offcanvasScrollingLabel">Ibu Kos</h3>
+      <h3 class="offcanvas-title" id="nmpemilik">Ibu Kos</h3>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body mx-2 imessage mb-2">
@@ -209,12 +209,30 @@ try {
   var wso = null
   var sender = "<?= session()->get('id') ?>"
   var receiver = "x";
+  var ids_kost = ''
 
-  function openChat(id_kost, id_owner) {
+  async function openChat(id_kost, id_owner,nama) {
+    $('#nmpemilik').text(nama)
+    ids_kost = id_kost
     if (sender == '') {
       window.location = '<?= base_url('Auth') ?>'
       return
     }
+    await $.ajax({
+      type: "GET",
+      url: "<?= base_url('chat/getchatuser') ?>",
+      data: {
+        id_kost: id_kost,
+        receiver: id_owner,
+        sender: sender
+      },
+      dataType: "html",
+    }).done(function(data) {
+      $('.imessage').html(data)
+    }).fail((err) => {
+      console.log(err);
+    })
+
     $('#ofc').trigger('click')
     receiver = id_owner
     wso = new WebSocket('ws://localhost:8888');
@@ -224,19 +242,23 @@ try {
       wso.send('[{"command":"handshake","address":"' + sender + '"}]')
     };
     wso.onmessage = function(e) {
-      let data = JSON.parse(e.data)[0]
-      let message = data.message
-      let date = data.timestamp
-      let receiver = data.receiver
-      if (receiver == sender) {
-        $('.imessage').append(`
+      try {
+        let data = JSON.parse(e.data)[0]
+        let message = data.message
+        let date = data.timestamp
+        let receiver = data.receiver
+        if (receiver == sender) {
+          $('.imessage').append(`
       <div class="mb-2  animate__animated animate__fadeInLeft row pe-2">
       <p class="from-them">${message}</p>
       <span class="text-secondary">${date}</span>
       </div>
       `)
-        $('#notif').trigger('play')
-        $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
+          $('#notif').trigger('play')
+          $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
+        }
+      } catch (error) {
+
       }
     }
   };
@@ -247,15 +269,17 @@ try {
       return
     }
     let timestamp = new moment().format('YYYY-MM-DD HH:mm:ss')
+    let uid = sender + "_" + ids_kost
+    console.log(uid);
     let data = JSON.stringify([{
       'message': msg,
       'timestamp': timestamp,
       'sender': sender,
       'receiver': receiver,
-      'id_kost': $('#chat_kost_id').val(),
+      'id_kost': ids_kost,
     }])
     wso.send(data);
-    let date = new moment().format('HH.mm')
+    let date = new moment().format('DD/MM/YYYY HH.mm')
     $('.imessage').append(`
      <div class="mb-2  animate__animated animate__fadeInRight d-flex justify-content-end flex-column">
       <p class="from-me">${msg}</p>

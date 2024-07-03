@@ -12,18 +12,10 @@ wsServer.on("connection", (ws, req) => {
   console.log(`New client connected with IP: ${clientIP}`);
 
   ws.on("message", (data) => {
-    console.log(data);
+    console.log("rec", data);
     let chatData;
     try {
       let json = JSON.parse(data)[0];
-      chatData = {
-        sender: json.sender,
-        receiver: json.receiver,
-        message: json.message,
-        status: 0,
-        timestamp: json.timestamp,
-        id_kost: json.id_kost || 0,
-      };
       if (json.command === "handshake" && json.address) {
         clients.set(json.address, ws);
         console.log(`Client ${json.address} connected`);
@@ -32,10 +24,25 @@ wsServer.on("connection", (ws, req) => {
         const receiver = clients.get(json.receiver);
         if (!receiver || receiver.readyState !== WebSocket.OPEN) {
           ws.send('{"status":"error","message":"receiver not found"}');
+          chatData = {
+            sender: json.sender,
+            receiver: json.receiver,
+            message: json.message,
+            status: 0,
+            timestamp: json.timestamp,
+            id_kost: json.id_kost || 0,
+          };
           saveChat(chatData);
         } else {
           receiver.send(data);
-          chatData = chatData.status = 1;
+          chatData = {
+            sender: json.sender,
+            receiver: json.receiver,
+            message: json.message,
+            status: 1,
+            timestamp: json.timestamp,
+            id_kost: json.id_kost || 0,
+          };
           saveChat(chatData);
         }
       } else {

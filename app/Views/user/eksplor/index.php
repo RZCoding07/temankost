@@ -48,6 +48,7 @@
 
           <h4 class="mt-10 mb-5 text-muted">List Kost</h4>
           <div class="row g-5">
+
             <?php
             if (!$data) {
               echo '<h4 class="text-center text-muted">Data Kost Tidak Ditemukan</h4>';
@@ -62,9 +63,12 @@
                     </div>
                   </div>
                   <a href="<?= base_url() ?>/Eksplor?detail=<?= $kost['id'] ?>" class="card-body h-150px"></a>
+
                   <div class="card-footer pb-3 px-3 ">
                     <h5 class="lh-0 w-100 text-white"><?= $kost['nama'] ?> <small class="float-end badge badge-warning"><?= $kost['jenis'] ?></small></h5>
                     <small class="lh-1"><i class="bi bi-geo-alt-fill text-white"></i> <?= $kost['alamat'] ?></small>
+                    <br>
+                    <i class="fa fa-user text-white mt-1 me-2" ></i><small><?= $kost['nmpemilik'] ?></small>
                     <div class="mt-3 text-primary fs-6 fw-bold"><?= rupiah($kost['harga']) ?> <small>/bulan</small> <small class="fs-8 float-end text-white fw-normal ">Sisa <?= ((float) $kost['jumlah_kamar']) - ((float) $kost['terisi']) ?> Kmr</small></div>
                   </div>
                 </div>

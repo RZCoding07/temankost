@@ -48,6 +48,18 @@
         </div>
       </div>
 
+      <?php if(session()->get('pemilik') == 'Ya'):?>
+        <div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-icon-gray-400 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold fs-5" data-kt-menu="true">
+          <div class="menu-item py-2">
+            <a class="menu-link  menu-center" href="<?= base_url() ?>/Chat/index" title="Chat" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+              <span class="menu-icon me-0">
+                <i class="bi bi-messenger"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      <?php endif ?>
+
       <div id="kt_aside_menu" class="menu menu-column menu-title-gray-600 menu-icon-gray-400 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold fs-5" data-kt-menu="true">
         <div class="menu-item py-2">
           <a class="menu-link  menu-center" href="<?= base_url() ?>/Chat" title="Chat" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
