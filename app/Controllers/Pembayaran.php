@@ -14,6 +14,9 @@ class Pembayaran extends BaseController
 	
 	public function __construct()
 	{
+		if(!session()->get('logged_in')){
+			return redirect()->to('/login');
+		}
 	    $this->pembayaranModel = new PembayaranModel();
        	$this->validation =  \Config\Services::validation();
 		
@@ -79,15 +82,12 @@ $value->updated_at,
 	public function add()
 	{
         $response = array();
-
 		$fields['id'] = $this->request->getPost('id');
 $fields['user_id'] = $this->request->getPost('user_id');
 $fields['kost_id'] = $this->request->getPost('kost_id');
 $fields['bulan'] = $this->request->getPost('bulan');
 $fields['created_at'] = $this->request->getPost('created_at');
 $fields['updated_at'] = $this->request->getPost('updated_at');
-
-
         $this->validation->setRules([
 			            'user_id' => ['label' => 'User id', 'rules' => 'required|numeric|min_length[0]'],
             'kost_id' => ['label' => 'Kost id', 'rules' => 'required|numeric|min_length[0]'],

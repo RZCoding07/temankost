@@ -41,12 +41,14 @@ try {
         <!--begin::Card body-->
         <div class="card-body d-flex flex-column justify-content-between h-100">
           <div class="d-flex">
-            <a href="<?= base_url() ?>/Eksplor" class="btn btn-icon btn-sm btn-primary rounded-circle me-4"><i class="bi bi-arrow-left fs-4"></i></a>
+            <a href="<?= base_url() ?>/Eksplor" class="btn btn-icon btn-sm btn-primary rounded-circle me-4"><i
+                class="bi bi-arrow-left fs-4"></i></a>
             <h4 class="mt-3 mb-5 text-muted">Detail <?= $title ?></h4>
           </div>
           <div class="row g-5">
             <div class="col-12 col-lg-8">
-              <img class="cropimg rounded" src="<?= base_url() . '/' . '/public/uploads/' . $data['id'] . '/' . $foto[0]['foto'] ?>" alt="Kost">
+              <img class="cropimg rounded"
+                src="<?= base_url() . '/' . '/public/uploads/' . $data['id'] . '/' . $foto[0]['foto'] ?>" alt="Kost">
               <div class="row g-5 mt-5">
                 <?php
                 // Ensure there are at least 5 elements in the $foto array
@@ -55,20 +57,23 @@ try {
                 }
 
                 foreach ($foto as $key) : ?>
-                  <div class="col-4 col-md-2">
-                    <a class="d-block overlay " data-fslightbox="lightbox-basic" href="<?= base_url() . '/' . '/public/uploads/' . $data['id'] . '/' . $key['foto'] ?>">
-                      <!--begin::Image-->
-                      <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-100px" style="background-image:url('<?= base_url() . '/' . '/public/uploads/' . $data['id'] . '/' . $key['foto'] ?>')">
-                      </div>
-                      <!--end::Image-->
+                <div class="col-4 col-md-2">
+                  <a class="d-block overlay " data-fslightbox="lightbox-basic"
+                    href="<?= base_url() . '/' . '/public/uploads/' . $data['id'] . '/' . $key['foto'] ?>">
+                    <!--begin::Image-->
+                    <div
+                      class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-100px"
+                      style="background-image:url('<?= base_url() . '/' . '/public/uploads/' . $data['id'] . '/' . $key['foto'] ?>')">
+                    </div>
+                    <!--end::Image-->
 
-                      <!--begin::Action-->
-                      <div class="overlay-layer card-rounded bg-dark bg-opacity-25 shadow">
-                        <i class="bi bi-fullscreen text-white fs-2x"></i>
-                      </div>
-                      <!--end::Action-->
-                    </a>
-                  </div>
+                    <!--begin::Action-->
+                    <div class="overlay-layer card-rounded bg-dark bg-opacity-25 shadow">
+                      <i class="bi bi-fullscreen text-white fs-2x"></i>
+                    </div>
+                    <!--end::Action-->
+                  </a>
+                </div>
                 <?php endforeach; ?>
               </div>
 
@@ -97,7 +102,8 @@ try {
 
                 <div class="d-flex flex-stack fw-bold fs-5 text-muted ">
                   <!-- <a href="https://www.google.com/maps/place/" class="text-muted text-hover-primary pe-2">Alamat</a>-->
-                  <a href="<?= base_url(); ?>/Map/<?= $data['kordinat'] ?>" class="text-muted text-hover-primary pe-2">Alamat</a>
+                  <a href="<?= base_url(); ?>/Map/<?= $data['kordinat'] ?>"
+                    class="text-muted text-hover-primary pe-2">Alamat</a>
                 </div>
                 <div class="mx-3 lh-1 text-muted mb-4">
                   <p> <i class="bi bi-geo-alt-fill"></i> <?= $data['alamat'] ?></p>
@@ -107,13 +113,20 @@ try {
                   <div class="m-0 fs-2 text-success"><?= rupiah($data['harga']) ?> <small>/bulan</small></div>
                 </div>
                 <div class="d-flex  fw-bold fs-5 mt-10 justify-content-center">
-                  <a href="https://wa.me/+62<?= $pemilik['telepon'] ?>?text=Hallo, Saya ingin Bertanya Tentang Kost <?= $title ?>" target="blank" class="btn btn-success me-3"><i class="bi bi-whatsapp fs-4 me-2"></i>Whatsapp</a>
-                  <a href="mailto:<?= $pemilik['email'] ?>" class="btn btn-secondary" target="blank"><i class="bi bi-envelope fs-4 me-2"></i>Email</a>
+                  <a href="https://wa.me/+62<?= $pemilik['telepon'] ?>?text=Hallo, Saya ingin Bertanya Tentang Kost <?= $title ?>"
+                    target="blank" class="btn btn-success me-3"><i class="bi bi-whatsapp fs-4 me-2"></i>Whatsapp</a>
+                  <a href="mailto:<?= $pemilik['email'] ?>" class="btn btn-secondary" target="blank"><i
+                      class="bi bi-envelope fs-4 me-2"></i>Email</a>
                   &nbsp;&nbsp;
-                  <button class=" btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#data-modal" data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i class="bi bi-cart-plus"></i><span>Booking</span></button>
-                  <button onclick="openChat('<?= $data['id'] ?>', '<?= $pemilik['id'] ?>','<?= $pemilik['nama'] ?>','<?= $data['nama'] ?>')" class=" btn btn-warning"><i class="bi bi-messenger"></i><span>Chat</span></button>
+                  <button class=" btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#data-modal"
+                    data-user_id="<?= session()->get('id') ?>" data-kost_id="<?= $data['id'] ?>"><i
+                      class="bi bi-cart-plus"></i><span>Booking</span></button>
+                  <button
+                    onclick="openChat('<?= $data['id'] ?>', '<?= $pemilik['id'] ?>','<?= $pemilik['nama'] ?>','<?= $data['nama'] ?>')"
+                    class=" btn btn-warning"><i class="bi bi-messenger"></i><span>Chat</span></button>
                   &nbsp;&nbsp;
-                  <button id="ofc" aria-controls="offcanvasRight" class="d-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"></button>
+                  <button id="ofc" aria-controls="offcanvasRight" class="d-none" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight"></button>
                 </div>
               </div>
             </div>
@@ -127,7 +140,8 @@ try {
     <!--end::Col-->
   </div>
   <!--end::Row-->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasRight" aria-labelledby="nmpemilik" style="width: 35%;">
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasRight"
+    aria-labelledby="nmpemilik" style="width: 35%;">
     <div class="offcanvas-header">
       <div class="d-flex flex-column">
         <h3 class="offcanvas-title" id="nmpemilik"></h3>
@@ -139,9 +153,11 @@ try {
     </div>
     <div class="align-self-end w-100 mb-3">
       <div class="input-group mb-3 px-2">
-        <input id="chat_message" type="text" class="form-control" placeholder="Ketik pesan..." aria-label="Ketik pesan..." aria-describedby="button-addon2">
+        <input id="chat_message" type="text" class="form-control" placeholder="Ketik pesan..."
+          aria-label="Ketik pesan..." aria-describedby="button-addon2">
         <input type="hidden" name="chat_kost_id" id="chat_kost_id">
-        <button id="chat_send" class="btn btn-primary" type="button" onclick="sendMessage($(this))">Kirim <i class="bi bi-paper-plane"></i></button>
+        <button id="chat_send" class="btn btn-primary" type="button" onclick="sendMessage($(this))">Kirim <i
+            class="bi bi-paper-plane"></i></button>
       </div>
     </div>
   </div>
@@ -161,12 +177,14 @@ try {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group mb-3">
-                  <input type="hidden" id="user_id" name="user_id" class="form-control" placeholder="User id" minlength="0" required>
+                  <input type="hidden" id="user_id" name="user_id" class="form-control" placeholder="User id"
+                    minlength="0" required>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group mb-3">
-                  <input type="hidden" id="kost_id" name="kost_id" class="form-control" placeholder="Kost id" minlength="0" required>
+                  <input type="hidden" id="kost_id" name="kost_id" class="form-control" placeholder="Kost id"
+                    minlength="0" required>
                 </div>
               </div>
               <div class="col-md-12">
@@ -192,8 +210,11 @@ try {
 
             <div class="form-group text-center">
               <div class="btn-group">
+                <?php if(empty(session()->get('email'))):?>
+                <button type="button" class="btn btn-info me-5 disabled" id="pay-button"> Anda Harus Login</button>
+                <?php else: ?>
                 <button type="button" class="btn btn-info me-5" id="pay-button"> Bayar Online Sekarang</button>
-
+                <?php endif?>
                 <button type="button" id="pay-button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
               </div>
             </div>
@@ -219,7 +240,8 @@ try {
     $('#nmkost').text(nama_kost)
     ids_kost = id_kost
     if (sender == '') {
-      window.location = '<?= base_url('Auth') ?>'
+      window.location = '<?= base_url('
+      Auth ') ?>'
       return
     }
     await $.ajax({
@@ -231,7 +253,7 @@ try {
         sender: sender
       },
       dataType: "html",
-    }).done(function(data) {
+    }).done(function (data) {
       $('.imessage').html(data)
       $('.imessage').scrollTop($('.imessage')[0].scrollHeight);
     }).fail((err) => {
@@ -242,11 +264,11 @@ try {
     receiver = id_owner
     wso = new WebSocket('ws://localhost:8888');
     $('#chat_kost_id').val(id_kost)
-    wso.onopen = function(e) {
+    wso.onopen = function (e) {
       console.log("Connection established!");
       wso.send('[{"command":"handshake","address":"' + sender + '"}]')
     };
-    wso.onmessage = function(e) {
+    wso.onmessage = function (e) {
       try {
         let data = JSON.parse(e.data)[0]
         let message = data.message
@@ -296,10 +318,10 @@ try {
   }
 
 
-  document.getElementById('pay-button').onclick = function() {
+  document.getElementById('pay-button').onclick = function () {
     // SnapToken acquired from previous step
     snap.pay('<?= $snapToken ?>', {
-      onSuccess: function(result) {
+      onSuccess: function (result) {
         //  ajax ke halaman bayar.php untuk mengubah status pembayaran
         // $.ajax({
         //    url: 'http://localhost/monifa_laundry/detail_order/detail_ck/bayar_ol.php',
@@ -315,15 +337,15 @@ try {
         //    }
         // });
       },
-      onPending: function(result) {
+      onPending: function (result) {
         console.log('pending');
         console.log(result);
       },
-      onError: function(result) {
+      onError: function (result) {
         console.log('error');
         console.log(result);
       },
-      onClose: function() {
+      onClose: function () {
         console.log('customer closed the popup without finishing the payment');
       }
     })
