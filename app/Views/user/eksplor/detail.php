@@ -207,7 +207,6 @@ try {
                 </div>
               </div>
             </div>
-
             <div class="form-group text-center">
               <div class="btn-group">
                 <?php if(empty(session()->get('email'))):?>

@@ -43,11 +43,12 @@ class KostModel extends Model
   }
 
   public function getAll() {
-    return KostModel::getData()
+    $data =  KostModel::getData()
         ->groupBy('kost.id, foto.foto')
         ->distinct('foto.foto')
         ->get()
         ->getResultArray();
+        return [$data[0]];
 }
   public function getSearch($q)
   {

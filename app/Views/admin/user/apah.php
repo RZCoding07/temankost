@@ -45,8 +45,7 @@
 		const btn = KTUtil.getById("kt_btn_1");
 		event.preventDefault();
 		KTUtil.btnWait(btn);
-		
-		Crud.post('/admin/pengguna/update',new FormData(this),(result)=>{
+		Crud.post('<?=$base?>/admin/pengguna/update',new FormData(this),(result)=>{
 			Dialog.toast(result.type,result.message);
 			KTUtil.btnRelease(btn);
 			getTable(tb_url);

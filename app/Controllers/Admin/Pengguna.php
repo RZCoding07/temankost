@@ -27,6 +27,7 @@ class Pengguna extends BaseController
 		return view('admin/pengguna/table',$data);
 	}
 	
+
 		public function formEdit($id)
 	{
 		$User=new PenggunaModel;
@@ -52,16 +53,11 @@ class Pengguna extends BaseController
 			echo json_encode($result);
 		}
 		else{
-			echo "Access Denide!!";
+			echo "Access Denied!!";
 		}
 		
 
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -89,7 +85,7 @@ class Pengguna extends BaseController
 		$User=new PenggunaModel;
 		$data=[
 			"id"=>$this->request->getVar('id'),
-			"name"=>$this->request->getVar('name'),
+			"nama"=>$this->request->getVar('nama'),
 			"password"=>$this->request->getVar('password'),
 			"email"=>$this->request->getVar('email'),
 			"pemilik"=>$this->request->getVar('pemilik'),
@@ -105,22 +101,23 @@ class Pengguna extends BaseController
 
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public function add()
+	{
 
+		$User=new PenggunaModel;
+		$data=[
+			"nama"=>$this->request->getVar('nama'),
+			"password"=>$this->request->getVar('password'),
+			"email"=>$this->request->getVar('email'),
+			"pemilik"=>$this->request->getVar('pemilik'),
+			"telepon"=>$this->request->getVar('telepon'),
+		];
+		$User->save($data);
+		$result=[
+			'type'		=>'successs',
+			'message'	=>'Data '.$this->title.' Berhasil ditambahkan'
+		];
+		
+		echo json_encode($result);
+	}
 }

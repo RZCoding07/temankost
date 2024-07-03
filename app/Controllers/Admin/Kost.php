@@ -77,11 +77,11 @@ class Kost extends BaseController
 		$db = db_connect();
 		helper(['form', 'url', 'filesystem']);
 		if ($this->request->getFileMultiple('files')) {
-			$db->table('foto')->where(['id_kost' => $id])->delete();
-			delete_files('/public/uploads/' . $id, true);
+			// $db->table('foto')->where(['id_kost' => $id])->delete();
+			// delete_files('public/uploads/' . $id, true);
 			foreach ($this->request->getFileMultiple('files') as $file) {
 
-				$file->move('/public/uploads/' . $id);
+				$file->move('public/uploads/' . $id);
 
 				$data = [
 					'id_kost' =>  $id,
