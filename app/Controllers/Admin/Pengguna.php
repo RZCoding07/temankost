@@ -111,6 +111,7 @@ class Pengguna extends BaseController
 			"email"=>$this->request->getVar('email'),
 			"pemilik"=>$this->request->getVar('pemilik'),
 			"telepon"=>$this->request->getVar('telepon'),
+			
 		];
 		$User->save($data);
 		$result=[
