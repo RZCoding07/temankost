@@ -52,10 +52,9 @@ try {
               <div class="row g-5 mt-5">
                 <?php
                 // Ensure there are at least 5 elements in the $foto array
-                while (count($foto) < 5) {
-                  $foto[] = ['foto' => 'default.jpg']; // Replace 'default.jpg' with your default image
-                }
-
+                // while (count($foto) < 5) {
+                //   $foto[] = ['foto' => 'default.jpg']; // Replace 'default.jpg' with your default image
+                // }
                 foreach ($foto as $key) : ?>
                 <div class="col-4 col-md-2">
                   <a class="d-block overlay " data-fslightbox="lightbox-basic"
