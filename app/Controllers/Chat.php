@@ -17,7 +17,7 @@ class Chat extends BaseController
         $users = $db->table('chat')->select('id_kost,sender, receiver,nama,email')->distinct()->where('receiver', $userID)->join('pengguna', 'chat.sender = pengguna.id')->get()->getResultArray();
         foreach ($users as $key => $value) {
            $nama_kost = $Kost->find($value['id_kost']);
-           $users[$key]['nama_kost'] = $nama_kost['nama'];
+           $users[$key]['nama_kost'] = $nama_kost['nama']??'';
         }
         $data = [
             'title' => 'Chat Room',
